@@ -1,12 +1,37 @@
-# React + Vite
+# 🍕 Pizza Restaurant App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React-based pizza ordering application where customers can browse the menu, add pizzas to their cart, and place orders.  
 
-Currently, two official plugins are available:
+## ✨ Features
+- Browse dynamic pizza menu
+- Add/remove pizzas from cart
+- Place and track orders
+- Responsive design (mobile & desktop)
+- Error handling with API fallback
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🛠️ Tech Stack
+- [React](https://reactjs.org/)
+- [React Router](https://reactrouter.com/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- Fake API (Render-hosted)
 
-## Expanding the ESLint configuration
+## 🚀 Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1. Clone the repo
+```bash
+git clone https://github.com/your-username/pizza-restaurant.git
+cd pizza-restaurant
+
+npm install
+
+npm run dev
+
+```
+
+### 📸 Screenshots
+
+(Add some app screenshots here)
+
+### 📜 License
+
+This project is licensed under the MIT License.
