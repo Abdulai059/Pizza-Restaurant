@@ -4,7 +4,10 @@
 
 @theme {
   --font-sans: "Roboto Mono", monospace;
+
+  --height-screen: 100dvh;
 }
+
 
 body {
   font-family: var(--font-roboto-mono);
