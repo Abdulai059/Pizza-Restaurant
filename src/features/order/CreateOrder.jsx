@@ -1,5 +1,6 @@
 import { Form, useActionData, useNavigation } from "react-router-dom";
 import Cart from "../cart/Cart";
+import Button from "@/ui/Button";
 
 // import { useState } from "react";
 
@@ -36,7 +37,7 @@ const fakeCart = [
 function CreateOrder() {
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
-  const formErros = useActionData();
+  const formErrors = useActionData();
 
   // const [withPriority, setWithPriority] = useState(false);
 
@@ -49,20 +50,20 @@ function CreateOrder() {
       <Form method="POST">
         <div>
           <label>First Name</label>
-          <input type="text" name="customer" required />
+          <input type="text" name="customer" required className="input" />
         </div>
 
         <div>
           <label>Phone number</label>
           <div>
-            <input type="tel" name="phone" required />
+            <input type="tel" name="phone" required className="input" />
           </div>
-          {formErros?.phone && <p>{formErros.phone}</p>}
+          {formErrors?.phone && <p>{formErrors.phone}</p>}
         </div>
         <div>
           <label>Address</label>
           <div>
-            <input type="text" name="address" required />
+            <input type="text" name="address" required className="input" />
           </div>
         </div>
 
@@ -73,15 +74,17 @@ function CreateOrder() {
             id="priority"
             // value={withPriority}
             // onChange={(e) => setWithPriority(e.target.checked)}
+
+            className="h-6 w-6 accent-yellow-400 focus:ring focus:ring-yellow-300 focus:ring-offset-2 focus:outline-none"
           />
           <label htmlFor="priority">Want to yo give your order priority?</label>
         </div>
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
-          <button disabled={isSubmitting}>
+          <Button disabled={isSubmitting}>
             {isSubmitting ? "Placing order...." : "Order now"}
-          </button>
+          </Button>
         </div>
       </Form>
     </div>
