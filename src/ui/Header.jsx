@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 function Header() {
   return (
-    <header className="bg-yellow-500 uppercase">
-      <Link to="/" className="tracking-widest uppercase">
+    <header className="border-b border-stone-200 bg-yellow-500 px-4 py-3 uppercase sm:px-6 flex items-center justify-between">
+      <Link to="/" className="tracking-widest uppercase md:text-3xl">
         Fast React Pizza Co.
       </Link>
 
