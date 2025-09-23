@@ -7,8 +7,6 @@ import {
   formatDate,
 } from "../../utils/helpers";
 
-
-
 function Order() {
   const order = useLoaderData();
 
@@ -27,7 +25,7 @@ function Order() {
   const deliveryIn = calcMinutesLeft(estimatedDelivery);
 
   return (
-    <div>
+    <div className="px-4 py-6">
       <div>
         <h2>Status</h2>
 
