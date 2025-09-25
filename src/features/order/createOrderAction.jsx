@@ -20,6 +20,7 @@ export async function createOrderAction({ request }) {
     priority: data.priority === "true",
   };
 
+
   const errors = {};
   if (!isValidPhone(order.phone))
     errors.phone =
@@ -27,12 +28,13 @@ export async function createOrderAction({ request }) {
 
   if (Object.keys(errors).length > 0) return errors;
 
+  
   // If everything is okay, create new order and redirect
   const newOrder = await createOrder(order);
 
 
   // to clear the cart in the store
-  store.dispatch(clearCart);
+  store.dispatch(clearCart());
 
   return redirect(`/order/${newOrder.id}`);
 }
