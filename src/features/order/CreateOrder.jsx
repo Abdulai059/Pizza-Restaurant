@@ -2,6 +2,10 @@ import { Form, useActionData, useNavigation } from "react-router-dom";
 import Cart from "../cart/Cart";
 import Button from "@/ui/Button";
 import { useSelector } from "react-redux";
+import { getCart, getTotalCartPrice } from "../cart/cartSlice";
+import EmptyCart from "../cart/EmptyCart";
+import { formatCurrency } from "@/utils/helpers";
+import { useState } from "react";
 
 // import { useState } from "react";
 
@@ -11,40 +15,22 @@ import { useSelector } from "react-redux";
 //     str
 //   );
 
-const fakeCart = [
-  {
-    pizzaId: 12,
-    name: "Mediterranean",
-    quantity: 2,
-    unitPrice: 16,
-    totalPrice: 32,
-  },
-  {
-    pizzaId: 6,
-    name: "Vegetale",
-    quantity: 1,
-    unitPrice: 13,
-    totalPrice: 13,
-  },
-  {
-    pizzaId: 11,
-    name: "Spinach and Mushroom",
-    quantity: 1,
-    unitPrice: 15,
-    totalPrice: 15,
-  },
-];
-
 function CreateOrder() {
+  const [withPriority, setWithPriority] = useState(false);
   const username = useSelector((state) => state.user.username);
 
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
+
+  
   const formErrors = useActionData();
+  const cart = useSelector(getCart);
+  const totalCartPrice = useSelector(getTotalCartPrice);
+  const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
 
-  // const [withPriority, setWithPriority] = useState(false);
+  const totalPrice = totalCartPrice + priorityPrice;
 
-  const cart = fakeCart;
+  if (!cart.length) return <EmptyCart />;
 
   return (
     <div className="px-4 py-6">
@@ -92,9 +78,8 @@ function CreateOrder() {
             type="checkbox"
             name="priority"
             id="priority"
-            // value={withPriority}
-            // onChange={(e) => setWithPriority(e.target.checked)}
-
+            value={withPriority}
+            onChange={(e) => setWithPriority(e.target.checked)}
             className="h-6 w-6 accent-yellow-400 focus:ring focus:ring-yellow-300 focus:ring-offset-2 focus:outline-none"
           />
           <label htmlFor="priority" className="font-medium">
@@ -104,8 +89,11 @@ function CreateOrder() {
 
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
+
           <Button disabled={isSubmitting} variant="primary">
-            {isSubmitting ? "Placing order...." : "Order now"}
+            {isSubmitting
+              ? "Placing order...."
+              : `Order now for ${formatCurrency(totalPrice)}`}
           </Button>
         </div>
       </Form>

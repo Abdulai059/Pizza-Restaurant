@@ -7,7 +7,7 @@ import Order from "./features/order/Order";
 import AppLayout from "./ui/AppLayout";
 import Error from "@/ui/Error";
 import { orderLoader } from "@/features/order/OrderLoader";
-import {createOrderAction} from "@/features/user/createOrderAction"
+import {createOrderAction} from "@/features/order/createOrderAction"
 
 
 
