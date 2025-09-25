@@ -83,7 +83,7 @@ function CreateOrder() {
               required
             />
 
-            {formErrors?.phone && (
+            {addressStatus === "error" && (
               <p className="mt-2 rounded-md bg-red-100 p-2 text-xs text-red-700">
                 {errorAdrress}
               </p>
@@ -91,7 +91,7 @@ function CreateOrder() {
           </div>
 
           {(!position.latitude || !position.longitude) && (
-            <span className="absolute right-[3px] z-50">
+            <span className="absolute top-[3px] right-[3px] z-50 md:top-[5px] md:right-[5px]">
               <Button
                 disabled={isLoadingAddress}
                 variant="small"
