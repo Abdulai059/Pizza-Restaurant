@@ -1,11 +1,12 @@
 import { Form, useActionData, useNavigation } from "react-router-dom";
 import Cart from "../cart/Cart";
 import Button from "@/ui/Button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getCart, getTotalCartPrice } from "../cart/cartSlice";
 import EmptyCart from "../cart/EmptyCart";
 import { formatCurrency } from "@/utils/helpers";
 import { useState } from "react";
+import { fetchAddress } from "../user/userSlice";
 
 // import { useState } from "react";
 
@@ -17,13 +18,21 @@ import { useState } from "react";
 
 function CreateOrder() {
   const [withPriority, setWithPriority] = useState(false);
-  const username = useSelector((state) => state.user.username);
+  const {
+    username,
+    status: addressStatus,
+    position,
+    address,
+  } = useSelector((state) => state.user);
+
+  const isLoadingAddress = addressStatus === "loading";
 
   const navigation = useNavigation();
   const isSubmitting = navigation.state === "submitting";
 
-  
   const formErrors = useActionData();
+  const dispatch = useDispatch();
+
   const cart = useSelector(getCart);
   const totalCartPrice = useSelector(getTotalCartPrice);
   const priorityPrice = withPriority ? totalCartPrice * 0.2 : 0;
@@ -61,16 +70,33 @@ function CreateOrder() {
           </div>
         </div>
 
-        <div className="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+        <div className="relative mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
           <label>Address</label>
           <div className="grow">
             <input
+              className="input w-full"
               type="text"
               name="address"
+              disabled={isLoadingAddress}
+              defaultValue={address}
               required
-              className="input w-full"
             />
           </div>
+
+          {!position.latitude && position.longitude && (
+            <span className="absolute right-[3px] z-50">
+              <Button
+                disabled={isLoadingAddress}
+                variant="small"
+                onClick={(e) => {
+                  e.preventDefault();
+                  dispatch(fetchAddress());
+                }}
+              >
+                Get position
+              </Button>
+            </span>
+          )}
         </div>
 
         <div className="mb-12 flex items-center gap-5">
@@ -90,7 +116,7 @@ function CreateOrder() {
         <div>
           <input type="hidden" name="cart" value={JSON.stringify(cart)} />
 
-          <Button disabled={isSubmitting} variant="primary">
+          <Button disabled={isSubmitting || isLoadingAddress} variant="primary">
             {isSubmitting
               ? "Placing order...."
               : `Order now for ${formatCurrency(totalPrice)}`}
